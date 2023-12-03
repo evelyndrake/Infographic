@@ -2,12 +2,13 @@ const express = require('express');
 const Pokedex = require('pokedex-promise-v2');
 const path = require('path');
 const app = express();
+const favicon = require('serve-favicon')
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
-// load app css
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // Serve the React app on the root URL
 app.get('/', (req, res) => {

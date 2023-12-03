@@ -6,8 +6,6 @@ $.getJSON("/cards", function(data) {
     for (var i = 0; i < data.results.length; i++) {
         pokemon.push(data.results[i]);
     }
-    console.log(pokemon.length)
-    console.log(data);
 
 var deck = document.getElementById("deck");
 
@@ -28,7 +26,6 @@ window.addEventListener('scroll', ()=>{
 async function loadMoreCards() {
     for (var x = cardNums; x < cardNums + PAGE_SIZE; x++) {
         if (x >= pokemon.length) {
-            console.log("No more cards to load.");
             return;
         }
         var new_card = document.createElement("div");
