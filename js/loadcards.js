@@ -403,3 +403,10 @@ search.onblur = function() {
 }
 // clear search bar on page refresh
 search.value = "";
+
+// when load_more button pressed, load more cards
+var load_more = document.getElementById("load_more");
+load_more.onclick = function() {
+    cardNums += PAGE_SIZE;
+    loadMoreCards();
+}
