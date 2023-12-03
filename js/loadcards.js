@@ -237,6 +237,7 @@ async function setModal(id) {
         // group of buttons to expand pokemon stats, moves, abilities, etc.
         var group = modal_body.appendChild(document.createElement("div"));
         group.className = "btn-group";
+        group.id = "btnGroup"
         group.setAttribute("role", "group");
         group.setAttribute("aria-label", "Basic example");
 
