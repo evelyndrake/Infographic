@@ -46,8 +46,19 @@
 
     
     
-    
-
+    <!-- realtime search bar -->
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search for a Pokemon" aria-label="Search for a Pokemon"
+        aria-describedby="button-addon2" id="search">
+      <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button> -->
+    </div>
+    <!-- warn user that search is slow -->
+    <div class="alert alert-warning" role="alert" id="search_warning">
+      <h4 class="alert-heading">Search is slow!</h4>
+      <p>Searching for a Pokemon can take a while. Please be patient.</p>
+      <hr>
+      <p class="mb-0">If you are having trouble, try searching for a Pokemon that you know is in the Pokedex.</p>
+    </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5" id="deck">
 
     </div>
