@@ -1,0 +1,10 @@
+.card-img-top {
+    image-rendering: pixelated !important;
+    image-rendering: -moz-crisp-edges !important;
+    width: 100%;
+}
+.modal-img {
+    image-rendering: pixelated !important;
+    image-rendering: -moz-crisp-edges !important;
+    width: 50%;
+}
