@@ -15,9 +15,10 @@ const container = document.querySelector('.container');
 window.addEventListener('scroll', ()=>{
     if (window.scrollY + window.innerHeight + 1 > document.documentElement.scrollHeight) {
         // run drawElements() again
-        cardNums += PAGE_SIZE;
+        
         // load more cards if search bar empty
         if (search.value == "") {
+            cardNums += PAGE_SIZE;
             loadMoreCards();
         }
     }
