@@ -487,16 +487,6 @@ async function filterCards2() {
     var load_more = document.getElementById("load_more");
     load_more.style.display = "none";
         
-
-    
-    var filter = search.value.toUpperCase();
-    // load only cards that match search
-    for (var i = 0; i < pokemon.length; i++) {
-        if (pokemon[i].name.toUpperCase().indexOf(filter) > -1) {
-            await loadSpecificCard(i);
-        }
-    }
-
     // if search bar empty, load more cards
     if (search.value == "") {
         cardNums = 0;
@@ -506,7 +496,19 @@ async function filterCards2() {
         var search_warning = document.getElementById("search_warning");
         search_warning.style.display = "none";
         load_more.style.display = "";
+    } else {
+        var filter = search.value.toUpperCase();
+        // load only cards that match search
+        for (var i = 0; i < pokemon.length; i++) {
+            if (pokemon[i].name.toUpperCase().indexOf(filter) > -1) {
+                await loadSpecificCard(i);
+            }
+        }
     }
+    
+    
+
+    
     // show deck again
     deck.style.display = "";
 }
