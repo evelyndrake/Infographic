@@ -438,6 +438,8 @@ var search = document.getElementById("search");
 var timeout = null;
 search.onkeyup = function() {
     clearTimeout(timeout);
+    cardNums = 0;
+    deck.innerHTML = "";
     timeout = setTimeout(filterCards2, 1000);
 }
 async function filterCards() {
