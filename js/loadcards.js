@@ -199,6 +199,88 @@ async function loadAllCards() {
     }
 }
 
+async function loadSpecificCard(x) {
+    // deck.style.display = "none";
+    var new_card = document.createElement("div");
+    new_card.className = "card";
+    var div = new_card.appendChild(document.createElement("div"));
+    div.className = "card-body";
+    var h4 = div.appendChild(document.createElement("h4"));
+    h4.className = "card-title";
+    // capitalize first letter of name
+    h4.innerHTML = pokemon[x].name.charAt(0).toUpperCase() + pokemon[x].name.slice(1);
+    var subtitle = div.appendChild(document.createElement("p"));
+    subtitle.className = "card-subtitle mb-2 text-muted";
+    subtitle.innerHTML = "#" + (x + 1);
+    var p = div.appendChild(document.createElement("p"));
+    p.className = "card-text";
+    await $.getJSON(pokemon[x].url, function(data) {
+        var img = p.appendChild(document.createElement("img"));
+        img.className = "card-img-top";
+        img.src = data.sprites.front_default;
+        img.setAttribute("data-bs-toggle", "modal");
+        img.setAttribute("data-bs-target", "#infoModal");
+        // when button clicked, run setmodal with id parameter
+        img.onclick = (function(x) {
+            return function() {
+                setModal(x);
+            }
+        })(x);
+        // create container for badges
+        var badge_group = div.appendChild(document.createElement("div"));
+        badge_group.className = "badge-group row justify-content-center";
+        for (var i = 0; i < data.types.length; i++) {
+            // create column for each badge
+            var badge_col = badge_group.appendChild(document.createElement("div"));
+            badge_col.className = "col-auto";
+            // create badge
+            var badge = badge_col.appendChild(document.createElement("span"));
+            badge.className = "badge bg-primary";
+            badge.innerHTML = data.types[i].type.name.charAt(0).toUpperCase() + data.types[i].type.name.slice(1);
+            // give each badge a different color
+            if (data.types[i].type.name == "normal") {
+                badge.className = "badge bg-secondary";
+            } else if (data.types[i].type.name == "fighting") {
+                badge.className = "badge bg-danger";
+            } else if (data.types[i].type.name == "flying") {
+                badge.className = "badge bg-info";
+            } else if (data.types[i].type.name == "poison") {
+                badge.className = "badge bg-success";
+            } else if (data.types[i].type.name == "ground") {
+                badge.className = "badge bg-warning text-dark";
+            } else if (data.types[i].type.name == "rock") {
+                badge.className = "badge bg-secondary";
+            } else if (data.types[i].type.name == "bug") {
+                badge.className = "badge bg-success";
+            } else if (data.types[i].type.name == "ghost") {
+                badge.className = "badge bg-dark";
+            } else if (data.types[i].type.name == "steel") {
+                badge.className = "badge bg-secondary";
+            } else if (data.types[i].type.name == "fire") {
+                badge.className = "badge bg-danger";
+            } else if (data.types[i].type.name == "water") {
+                badge.className = "badge bg-primary";
+            } else if (data.types[i].type.name == "grass") {
+                badge.className = "badge bg-success";
+            } else if (data.types[i].type.name == "electric") {
+                badge.className = "badge bg-warning text-dark";
+            } else if (data.types[i].type.name == "psychic") {
+                badge.className = "badge bg-danger";
+            } else if (data.types[i].type.name == "ice") {
+                badge.className = "badge bg-info";
+            } else if (data.types[i].type.name == "dragon") {
+                badge.className = "badge bg-primary";
+            } else if (data.types[i].type.name == "dark") {
+                badge.className = "badge bg-dark";
+            } else if (data.types[i].type.name == "fairy") {
+                badge.className = "badge bg-danger";
+            }
+        }
+    });
+    deck.appendChild(new_card);
+    deck.style.display = "";
+}
+
 async function setModal(id) {
     var modal_title = document.getElementById("modal_title");
     var modal_body = document.getElementById("modal_body");
@@ -356,7 +438,7 @@ var search = document.getElementById("search");
 var timeout = null;
 search.onkeyup = function() {
     clearTimeout(timeout);
-    timeout = setTimeout(filterCards, 1000);
+    timeout = setTimeout(filterCards2, 1000);
 }
 async function filterCards() {
     // hide deck until done
@@ -386,20 +468,57 @@ async function filterCards() {
         loadMoreCards();
         // hide search warning
         var search_warning = document.getElementById("search_warning");
-        search_warning.style.display = "none";
+        // search_warning.style.display = "none";
     }
     // show deck again
     deck.style.display = "";
 }
+
+async function filterCards2() {
+    // hide deck until done
+    // deck.style.display = "none";
+
+    // clear deck
+    cardNums = 0;
+    deck.innerHTML = "";
+    var load_more = document.getElementById("load_more");
+    load_more.style.display = "none";
+        
+
+    
+    var filter = search.value.toUpperCase();
+    // load only cards that match search
+    for (var i = 0; i < pokemon.length; i++) {
+        if (pokemon[i].name.toUpperCase().indexOf(filter) > -1) {
+            await loadSpecificCard(i);
+        }
+    }
+
+    // if search bar empty, load more cards
+    if (search.value == "") {
+        cardNums = 0;
+        deck.innerHTML = "";
+        loadMoreCards();
+        // hide search warning
+        var search_warning = document.getElementById("search_warning");
+        search_warning.style.display = "none";
+        load_more.style.display = "";
+    }
+    // show deck again
+    deck.style.display = "";
+}
+
+
+
 // show search warning with animation when search bar focused
-var search_warning = document.getElementById("search_warning");
+// var search_warning = document.getElementById("search_warning");
 search_warning.style.display = "none";
 search.onfocus = function() {
-    search_warning.style.display = "block";
+    // search_warning.style.display = "block";
 }
 // hide search warning when search bar unfocused
 search.onblur = function() {
-    search_warning.style.display = "none";
+    // search_warning.style.display = "none";
 }
 // clear search bar on page refresh
 search.value = "";
@@ -410,3 +529,4 @@ load_more.onclick = function() {
     cardNums += PAGE_SIZE;
     loadMoreCards();
 }
+
